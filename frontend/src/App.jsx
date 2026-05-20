@@ -14,15 +14,25 @@ function App() {
   const { user } = useAuth();
 
   return (
-    <Layout>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
-        <Route path="/register" element={user ? <Navigate to="/" /> : <Register />} />
-        <Route path="/courses" element={<Courses />} />
-        <Route path="/courses/:id" element={<CourseDetails />} />
+    <Routes>
+      {/* All pages use the common Layout */}
+      <Route path="/" element={<Layout />}>
+        {/* Public Routes */}
+        <Route index element={<Home />} />
         <Route
-          path="/admin"
+          path="login"
+          element={user ? <Navigate to="/" replace /> : <Login />}
+        />
+        <Route
+          path="register"
+          element={user ? <Navigate to="/" replace /> : <Register />}
+        />
+        <Route path="courses" element={<Courses />} />
+        <Route path="courses/:id" element={<CourseDetails />} />
+
+        {/* Protected Admin Route */}
+        <Route
+          path="admin"
           element={
             <ProtectedRoute>
               <AdminRoute>
@@ -31,8 +41,11 @@ function App() {
             </ProtectedRoute>
           }
         />
-      </Routes>
-    </Layout>
+
+        {/* Fallback Route */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Route>
+    </Routes>
   );
 }
 
