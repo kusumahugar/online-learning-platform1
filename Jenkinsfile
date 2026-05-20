@@ -1,37 +1,49 @@
 pipeline {
-  agent any
+    agent any
 
-  stages {
-    stage('Checkout') {
-      steps {
-        checkout scm
-      }
+    environment {
+        COMPOSE_PROJECT_NAME = 'online-learning-platform1'
     }
 
-    stage('Build Docker Images') {
-      steps {
-        sh 'docker compose build --pull'
-      }
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build Docker Images') {
+            steps {
+                bat 'docker compose build --pull'
+            }
+        }
+
+        stage('Start Containers') {
+            steps {
+                bat 'docker compose up -d'
+            }
+        }
+
+        stage('Verify Containers Are Running') {
+            steps {
+                bat 'docker compose ps'
+                bat 'docker ps'
+                bat 'curl -f http://localhost:5000'
+            }
+        }
     }
 
-    stage('Start Containers') {
-      steps {
-        sh 'docker compose up -d'
-      }
-    }
+    post {
+        always {
+            bat 'docker ps'
+        }
 
-    stage('Verify containers are running') {
-      steps {
-        sh 'docker compose ps'
-        sh 'docker ps --filter "name=online-learning-platform_backend" --filter "status=running"'
-        sh 'curl -f http://localhost:5000 || exit 1'
-      }
-    }
-  }
+        success {
+            echo 'Deployment completed successfully!'
+        }
 
-  post {
-    always {
-      sh 'docker compose down'
+        failure {
+            echo 'Deployment failed!'
+        }
     }
-  }
 }
