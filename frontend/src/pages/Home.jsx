@@ -4,7 +4,7 @@ const Home = () => {
   return (
     <section className="space-y-6">
       <div className="rounded-3xl border border-slate-800 bg-slate-900/80 p-10 shadow-xl shadow-slate-950/10">
-        <h1 className="text-4xl font-semibold text-cyan-300">Online Learning</h1>
+        <h1 className="text-4xl font-semibold text-cyan-300">Online Learning platform</h1>
         <p className="mt-4 max-w-2xl text-slate-300">
           Browse courses, enroll as a student, and manage course content as an admin. This platform includes authentication,
           role-based access, and responsive UI.
