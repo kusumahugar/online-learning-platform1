@@ -8,9 +8,6 @@ const Home = () => {
         <p className="mt-4 max-w-2xl text-slate-300">
           Browse courses, enroll as a student, and manage course content as an admin. This platform includes authentication,
           role-based access, and responsive UI.
-
-          Learn from industry experts through structured lessons, hands-on projects, and real-world assignments. Track your progress, earn certificates, and build skills in
-           web development, DevOps, data science, and more.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
           <Link to="/courses" className="rounded bg-cyan-500 px-5 py-3 font-medium text-slate-950 hover:bg-cyan-400">
